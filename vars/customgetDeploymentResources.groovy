@@ -19,6 +19,7 @@ def call(body) {
     def limitMemory = config.resourceLimitMemory ?: '0'
     def replicas = config.replicaCount ?: '1'
     def health_uri = config.healthUri ?: '/'
+    def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
     def yaml
 
     def isSha = ''
