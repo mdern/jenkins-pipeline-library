@@ -20,6 +20,7 @@ def call(body) {
     def replicas = config.replicaCount ?: '1'
     def health_uri = config.healthUri ?: '/'
     def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
+    def custom_environment = config.customEnvironment ?: ''
     def yaml
 
     def isSha = ''
@@ -97,6 +98,7 @@ def deployment = """
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          ${custom_environment}
           image: ${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}
           imagePullPolicy: IfNotPresent
           name: ${env.JOB_NAME}
