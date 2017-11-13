@@ -15,7 +15,7 @@ def call(body) {
     def expose = config.exposeApp ?: 'true'
     def requestCPU = config.resourceRequestCPU ?: '0'
     def requestMemory = config.resourceRequestMemory ?: '0'
-    def limitCPU = config.resourceLimitMemory ?: '0'
+    def limitCPU = config.resourceLimitCPU ?: '0'
     def limitMemory = config.resourceLimitMemory ?: '0'
     def replicas = config.replicaCount ?: '1'
     def health_uri = config.healthUri ?: '/'
