@@ -116,7 +116,7 @@ def deployment = """
             httpGet:
               path: "${health_uri}"
               port: ${config.port}
-            initialDelaySeconds: 1
+            initialDelaySeconds: 60
             timeoutSeconds: 5
             failureThreshold: 5
           livenessProbe:
