@@ -19,6 +19,7 @@ def call(body) {
     def limitMemory = config.resourceLimitMemory ?: '0'
     def replicas = config.replicaCount ?: '1'
     def health_uri = config.healthUri ?: '/'
+    def health_port = config.healthPort ?: "${config.port}"
     def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
     def custom_environment = config.customEnvironment ?: ''
     def yaml
@@ -115,14 +116,14 @@ def deployment = """
           readinessProbe:
             httpGet:
               path: "${health_uri}"
-              port: ${config.port}
+              port: ${health_port}
             initialDelaySeconds: 60
             timeoutSeconds: 5
             failureThreshold: 5
           livenessProbe:
             httpGet:
               path: "${health_uri}"
-              port: ${config.port}
+              port: ${health_port}
             initialDelaySeconds: 180
             timeoutSeconds: 5
             failureThreshold: 5
@@ -177,14 +178,14 @@ def deploymentConfig = """
           readinessProbe:
             httpGet:
               path: "${health_uri}"
-              port: ${config.port}
+              port: ${health_port}
             initialDelaySeconds: 1
             timeoutSeconds: 5
             failureThreshold: 5
           livenessProbe:
             httpGet:
               path: "${health_uri}"
-              port: ${config.port}
+              port: ${health_port}
             initialDelaySeconds: 180
             timeoutSeconds: 5
             failureThreshold: 5
