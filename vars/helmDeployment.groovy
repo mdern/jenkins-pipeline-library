@@ -45,32 +45,32 @@ def call(body) {
     def ingress_enable = config.ingressEnable ?: 'false'
 
     def values = """
-    replicaCount: ${replicaCount}
-    image:
-      name: ${image_name}
-      pullPolicy: ${imagepull}
-    service:
-      name: ${service_name}
-      type: ClusterIP
-      externalPort: ${external_port}
-      internalPort: ${internal_port}
-    """.stripIndent()
+replicaCount: ${replicaCount}
+image:
+  name: ${image_name}
+  pullPolicy: ${imagepull}
+service:
+  name: ${service_name}
+  type: ClusterIP
+  externalPort: ${external_port}
+  internalPort: ${internal_port}
+    """
     def ingress = """
-    ingress:
-      enabled: true
-      ${to_yaml([hosts: [config.hostNames]])}
-      ${to_yaml([annotations: [config.ingressAnnotations]])}
-      ${tls_string(config.hostNames)}
-    """.stripIndent()
+ingress:
+  enabled: true
+  ${to_yaml([hosts: [config.hostNames]])}
+  ${to_yaml([annotations: [config.ingressAnnotations]])}
+  ${tls_string(config.hostNames)}
+    """
     def resources = """
-    resources:
-      limits:
-        cpu: ${limitCPU}
-        memory: ${limitMemory}
-      requests:
-        cpu: ${requestCPU}
-        memory: ${requestMemory}
-    """.stripIndent()
+resources:
+  limits:
+    cpu: ${limitCPU}
+    memory: ${limitMemory}
+  requests:
+    cpu: ${requestCPU}
+    memory: ${requestMemory}
+    """
 
     return values + ingress + resources
 }
