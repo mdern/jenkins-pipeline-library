@@ -59,7 +59,7 @@ service:
 ingress:
   enabled: true
   ${to_yaml(hosts: config.hostNames)}
-  ${to_yaml([annotations: [config.ingressAnnotations]])}
+  ${to_yaml(annotations: config.ingressAnnotations)}
   ${tls_string(config.hostNames)}
     """
     def resources = """
