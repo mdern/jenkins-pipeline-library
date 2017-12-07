@@ -9,6 +9,16 @@ def to_yaml(yamldata) {
   return yaml.dump(yamldata)
 }
 
+//Build map of tls secrets
+def String tls_string(hostnames) {
+  def Map hostmap = [tls: []]
+  for (host in hostnames) {
+    hostmap.tls << [secretName:host + "-tls-secret", hosts: [host]]
+  }
+
+  return to_yaml(hostmap)
+}
+
 def call(body) {
     // evaluate the body block, and collect configuration into the object
     def config = [:]
@@ -33,16 +43,6 @@ def call(body) {
     def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
     def custom_values = config.customValues ?: ''
     def ingress_enable = config.ingressEnable ?: 'false'
-
-    //Build map of tls secrets
-    def String tls_string(hostnames) {
-      def Map hostmap = [tls: []]
-      for (host in hostnames) {
-        hostmap.tls << [secretName:host + "-tls-secret", hosts: [host]]
-      }
-
-      return to_yaml(hostmap)
-    }
 
     def values = """
     replicaCount: ${replicaCount}
