@@ -35,7 +35,7 @@ def call(body) {
     def ingress_enable = config.ingressEnable ?: 'false'
 
     //Build map of tls secrets
-    String def tls_string(hostnames) {
+    def String tls_string(hostnames) {
       def Map hostmap = [tls: []]
       for (host in hostnames) {
         hostmap.tls << [secretName:host + "-tls-secret", hosts: [host]]
