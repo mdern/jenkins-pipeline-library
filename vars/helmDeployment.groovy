@@ -65,10 +65,10 @@ def call(body) {
     def resources = """
     resources:
       limits:
-        cpu: ${limitCpu}
+        cpu: ${limitCPU}
         memory: ${limitMemory}
       requests:
-        cpu: ${requestCpu}
+        cpu: ${requestCPU}
         memory: ${requestMemory}
     """.stripIndent()
 
