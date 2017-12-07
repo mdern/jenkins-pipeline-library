@@ -58,7 +58,7 @@ service:
     def ingress = """
 ingress:
   enabled: true
-  ${to_yaml([hosts: [config.hostNames]])}
+  ${to_yaml(hosts: [config.hostNames])}
   ${to_yaml([annotations: [config.ingressAnnotations]])}
   ${tls_string(config.hostNames)}
     """
