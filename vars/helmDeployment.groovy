@@ -72,5 +72,25 @@ resources:
     memory: ${requestMemory}
     """
 
-    return values + ingress + resources
+    def cloud = flow.getCloudConfig()
+
+    podTemplate(
+      cloud: cloud,
+      serviceAccount: 'jenkins',
+      label: 'helm',
+      containers: [
+        [
+          name: 'helm',
+          image: 'linkyard/docker-helm:2.7.2',
+          command: 'sh -c',
+          args: 'cat',
+          ttyEnabled: true
+        ]
+      ]
+    ) {
+      node('helm') {
+        sh "echo 'Hello World'"
+      }
+    }
+
 }
