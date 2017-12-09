@@ -81,7 +81,7 @@ resources:
       containers: [
         [
           name: 'helm',
-          image: 'linkyard/docker-helm:2.7.2',
+          image: 'justicel/docker-helm:2.7.2',
           command: 'sh -c',
           args: 'cat',
           ttyEnabled: true
