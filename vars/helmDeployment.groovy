@@ -73,6 +73,7 @@ resources:
     """
 
     def cloud = flow.getCloudConfig()
+    def helmConfig = values + ingress + resources
 
     podTemplate(
       cloud: cloud,
@@ -91,7 +92,10 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
-          sh "helm list"
+          values = new FilePath(new File(build.workspace.toString() + "/values.yaml"
+          values.write(helmConfig, null)
+
+          sh "helm upgrade --install --namespace development testing123 -f values.yaml ./chart"
         }
       }
     }
