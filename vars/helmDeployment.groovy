@@ -92,8 +92,7 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
-          def helmValues = new FilePath(build.workspace, 'values.yaml')
-          values.write(helmValues, null)
+          writeFile('values.yaml', helmValues)
 
           sh "helm upgrade --install --namespace development testing123 -f values.yaml ./chart"
         }
