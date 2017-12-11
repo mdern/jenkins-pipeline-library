@@ -75,6 +75,8 @@ resources:
     def cloud = flow.getCloudConfig()
     def helmConfig = values + ingress + resources
 
+    stash name: "helmconfig", includes: "chart"
+
     podTemplate(
       cloud: cloud,
       serviceAccount: 'jenkins',
@@ -93,6 +95,9 @@ resources:
       node('helm-build-job') {
         container(name: 'helm') {
           writeFile file: 'values.yaml', text: helmConfig
+
+          unstash "helmconfig"
+          sh "ls -alh"
 
           sh "helm upgrade --install --namespace development testing123 -f values.yaml ${env.WORKSPACE}/chart"
         }
