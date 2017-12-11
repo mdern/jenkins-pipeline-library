@@ -91,7 +91,7 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
-          sh "echo 'Hello World'"
+          sh "helm list"
         }
       }
     }
