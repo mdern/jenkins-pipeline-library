@@ -89,8 +89,10 @@ resources:
         ]
       ]
     ) {
-      node('helm') {
-        sh "echo 'Hello World'"
+      node('helm-build-job') {
+        container(name: 'helm') {
+          sh "echo 'Hello World'"
+        }
       }
     }
 
