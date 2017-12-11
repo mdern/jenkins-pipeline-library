@@ -13,9 +13,10 @@ def to_yaml(yamldata) {
 def String tls_string(hostnames) {
   def Map hostmap = [tls: []]
   for (host in hostnames) {
-    hostmap.tls << [secretName:host + "-tls-secret", hosts: [host]]
+    hostmap["tls"] << [secretName:host + "-tls-secret", hosts: [host]]
   }
 
+  println hostmap
   return to_yaml(hostmap)
 }
 
