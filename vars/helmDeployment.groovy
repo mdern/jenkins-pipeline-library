@@ -97,9 +97,9 @@ resources:
           writeFile file: 'values.yaml', text: helmConfig
 
           unstash "helmconfig"
-          sh "ls -alh"
+          sh "cat values.yaml"
 
-          sh "helm upgrade --install --namespace development testing123 -f values.yaml ${env.WORKSPACE}/chart"
+          sh "helm upgrade --install --namespace development testing123 -f values.yaml chart"
         }
       }
     }
