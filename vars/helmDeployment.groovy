@@ -77,7 +77,8 @@ resources:
     podTemplate(
       cloud: cloud,
       serviceAccount: 'jenkins',
-      label: 'helm',
+      label: 'helm-build-job',
+      inheritFrom: 'base',
       containers: [
         [
           name: 'helm',
