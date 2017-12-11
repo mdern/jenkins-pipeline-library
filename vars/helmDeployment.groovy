@@ -94,8 +94,7 @@ resources:
         container(name: 'helm') {
           writeFile file: 'values.yaml', text: helmConfig
 
-          sh "cat values.yaml"
-          sh "helm upgrade --install --namespace development testing123 -f values.yaml ./chart"
+          sh "helm upgrade --install --namespace development testing123 -f values.yaml ${env.WORKSPACE}/chart"
         }
       }
     }
