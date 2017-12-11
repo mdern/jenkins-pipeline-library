@@ -92,7 +92,7 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
-          writeFile('values.yaml', helmValues)
+          writeFile('values.yaml', helmConfig)
 
           sh "cat values.yaml"
           sh "helm upgrade --install --namespace development testing123 -f values.yaml ./chart"
