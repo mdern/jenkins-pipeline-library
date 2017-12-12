@@ -70,6 +70,8 @@ service:
       ]
     ])
 
+    println ingress
+
     def resources = """
 resources:
   limits:
