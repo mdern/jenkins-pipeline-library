@@ -66,7 +66,7 @@ service:
         enabled: true,
         hosts: config.hostNames,
         annotations: config.ingressAnnotations,
-        tls: tls_string(config.hostNames)
+        tls: tls_string(config.hostNames).tls
       ]]
     ])
 
