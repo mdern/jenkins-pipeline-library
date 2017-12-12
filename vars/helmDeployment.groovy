@@ -5,7 +5,7 @@ import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
 // Small method to turn maps or arrays into yaml
-def to_yaml(yamldata) {
+def static to_yaml(Map yamldata) {
   DumperOptions options = new DumperOptions();
   options.setAllowReadOnlyProperties(true);
   options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
@@ -61,10 +61,14 @@ service:
   internalPort: ${internal_port}
     """
 
-    def ingress = to_yaml([ingress: [[enabled: true], hosts: config.hostNames, annotations: config.ingressAnnotations, tls: tls_string(config.hostNames)]])
-//    ingress.ingress.hosts = [config.hostNames]
-//    ingress.ingress.annotations = config.ingressAnnotations
-//    ingress.ingress.tls = tls_string(config.hostNames)
+    def ingress = to_yaml([
+      ingress: [[
+        enabled: true,
+        hosts: config.hostNames,
+        annotations: config.ingressAnnotations,
+        tls: tls_string(config.hostNames)
+      ]]
+    ])
 
     def resources = """
 resources:
