@@ -59,7 +59,7 @@ service:
   type: ClusterIP
   externalPort: ${external_port}
   internalPort: ${internal_port}
-    """.stripIndent()
+""".stripIndent()
 
     def ingress = to_yaml([
       ingress: [
@@ -80,7 +80,7 @@ resources:
   requests:
     cpu: ${requestCPU}
     memory: ${requestMemory}
-    """.stripIndent()
+""".stripIndent()
 
     def cloud = flow.getCloudConfig()
     def helmConfig = values + ingress + resources
