@@ -2,22 +2,26 @@
 import io.fabric8.Utils
 import io.fabric8.Fabric8Commands
 import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.DumperOptions
 
 // Small method to turn maps or arrays into yaml
 def to_yaml(yamldata) {
-  Yaml yaml = new Yaml()
+  DumperOptions options = new DumperOptions();
+  options.setAllowReadOnlyProperties(true);
+  options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+  options.setIndent(2);
+  Yaml yaml = new Yaml(options)
   return yaml.dump(yamldata)
 }
 
 //Build map of tls secrets
-def String tls_string(hostnames) {
+def tls_string(hostnames) {
   def Map hostmap = [tls: []]
   for (host in hostnames) {
     hostmap["tls"] << [secretName:host + "-tls-secret", hosts: [host]]
   }
 
-  println hostmap
-  return to_yaml(hostmap)
+  return hostmap
 }
 
 def call(body) {
@@ -56,13 +60,12 @@ service:
   externalPort: ${external_port}
   internalPort: ${internal_port}
     """
-    def ingress = """
-ingress:
-  enabled: true
-  ${to_yaml(hosts: config.hostNames)}
-  ${to_yaml(annotations: config.ingressAnnotations)}
-  ${tls_string(config.hostNames)}
-    """
+
+    def ingress = to_yaml([ingress: [[enabled: true], hosts: config.hostNames, annotations: config.ingressAnnotations, tls: tls_string(config.hostNames)]])
+//    ingress.ingress.hosts = [config.hostNames]
+//    ingress.ingress.annotations = config.ingressAnnotations
+//    ingress.ingress.tls = tls_string(config.hostNames)
+
     def resources = """
 resources:
   limits:
