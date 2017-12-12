@@ -48,12 +48,14 @@ def call(body) {
     def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
     def custom_values = config.customValues ?: ''
     def ingress_enable = config.ingressEnable ?: 'false'
+    def imagepullsecret = config.imagePullSecret ?: 'false'
 
     def values = """
 replicaCount: ${replicaCount}
 image:
   name: ${image_name}
   pullPolicy: ${imagepull}
+  pullSecret: ${imagepullsecret}
 service:
   name: ${service_name}
   type: ClusterIP
