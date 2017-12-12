@@ -62,12 +62,12 @@ service:
     """
 
     def ingress = to_yaml([
-      ingress: [[
+      ingress: [
         enabled: true,
         hosts: config.hostNames,
         annotations: config.ingressAnnotations,
         tls: tls_string(config.hostNames).tls
-      ]]
+      ]
     ])
 
     def resources = """
