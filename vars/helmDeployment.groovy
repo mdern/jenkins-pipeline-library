@@ -111,7 +111,8 @@ resources:
           unstash "helmconfig"
           sh "cat values.yaml"
           
-          sh "helm upgrade --install --wait --namespace development testing123 -f values.yaml chart"
+          sh "helm upgrade testing123 chart --install --wait --namespace development -f values.yaml"
+
         }
       }
     }
