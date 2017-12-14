@@ -85,7 +85,7 @@ resources:
     def cloud = flow.getCloudConfig()
     def helmConfig = values + ingress + resources
 
-    stash name: "helmconfig", includes: "chart/*"
+    stash name: "helmconfig", includes: "chart/*/**"
 
     podTemplate(
       cloud: cloud,
