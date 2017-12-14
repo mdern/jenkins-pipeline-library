@@ -61,6 +61,8 @@ service:
   type: ClusterIP
   externalPort: ${external_port}
   internalPort: ${internal_port}
+  healthPath: ${health_uri}
+  healthPort: ${health_port}
 """.stripIndent()
 
     def ingress = to_yaml([
