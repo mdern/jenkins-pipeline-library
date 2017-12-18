@@ -110,7 +110,7 @@ resources:
 
           unstash "helmconfig"
           
-          sh "helm upgrade testing123 chart --debug --wait --install --namespace development -f values.yaml"
+          sh "helm upgrade ${service_name} chart --debug --wait --install --namespace development -f values.yaml"
 
         }
       }
