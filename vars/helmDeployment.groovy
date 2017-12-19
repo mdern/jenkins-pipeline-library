@@ -114,7 +114,7 @@ resources:
             throw new Exception("Namespace cannot be empty!")
           }
 
-          sh "helm upgrade ${config.namespace.substring(4)}-${service_name} chart --debug --wait --install --namespace ${config.namespace} -f values.yaml"
+          sh "helm upgrade ${config.namespace.substring(0,3)}-${service_name} chart --debug --wait --install --namespace ${config.namespace} -f values.yaml"
 
         }
       }
