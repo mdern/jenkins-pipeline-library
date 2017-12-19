@@ -85,7 +85,7 @@ resources:
 """.stripIndent()
 
     def cloud = flow.getCloudConfig()
-    def helmConfig = values + ingress + resources
+    def helmConfig = values + ingress + resources + to_yaml(custom_values)
 
     stash name: "helmconfig", includes: "chart/*/**"
 
