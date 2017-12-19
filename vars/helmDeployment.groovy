@@ -110,7 +110,11 @@ resources:
 
           unstash "helmconfig"
           
-          sh "helm upgrade ${service_name} chart --debug --wait --install --namespace development -f values.yaml"
+          if (! config.namespace) {
+            throw new Exception("Namespace cannot be empty!")
+          }
+
+          sh "helm upgrade ${service_name} chart --debug --wait --install --namespace ${config.namespace} -f values.yaml"
 
         }
       }
