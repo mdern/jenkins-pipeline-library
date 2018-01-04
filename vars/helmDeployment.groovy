@@ -93,8 +93,13 @@ resources:
       cloud: cloud,
       serviceAccount: 'jenkins',
       label: 'helm-build-job',
-      inheritFrom: 'base',
       containers: [
+        [
+            name: 'jnlp',
+            image: "jenkins/jnlp-slave:3.15-1-alpine",
+            args: '${computer.jnlpmac} ${computer.name}',
+            workingDir: '/home/jenkins/'
+        ],
         [
           name: 'helm',
           image: 'justicel/docker-helm:2.7.2-1',
