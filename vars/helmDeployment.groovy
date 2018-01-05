@@ -96,7 +96,7 @@ resources:
       containers: [
         [
             name: 'jnlp',
-            image: "jenkins/jnlp-slave:3.15-1",
+            image: "fabric8/jenkins-jnlp-client:3.0.92",
             args: '${computer.jnlpmac} ${computer.name}',
             workingDir: '/home/jenkins/'
         ],
