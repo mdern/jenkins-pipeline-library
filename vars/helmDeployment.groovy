@@ -90,13 +90,13 @@ resources:
     stash name: "helmconfig", includes: "chart/*/**"
 
     podTemplate(
-      cloud: cloud,
+      cloud: 'kubernetes',
       serviceAccount: 'jenkins',
       label: 'helm-build-job',
       containers: [
         [
             name: 'jnlp',
-            image: "jenkins/jnlp-slave:3.10-1",
+            image: "jenkins/jnlp-slave:3.15-1",
             args: '${computer.jnlpmac} ${computer.name}',
             workingDir: '/home/jenkins/'
         ],
