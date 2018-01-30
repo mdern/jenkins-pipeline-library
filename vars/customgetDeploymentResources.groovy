@@ -216,11 +216,7 @@ def deploymentConfig = """
       name: ${config.version}
 """
 
-  if (flow.isOpenShift()){
-    yaml = list + service + is + deploymentConfig
-  } else {
-    yaml = list + service + deployment
-  }
+  yaml = list + service + deployment
 
   echo 'using resources:\n' + yaml
   return yaml
