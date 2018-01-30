@@ -25,9 +25,6 @@ def call(body) {
     def yaml
 
     def isSha = ''
-    if (flow.isOpenShift()){
-        isSha = utils.getImageStreamSha(env.JOB_NAME)
-    }
 
     def fabric8Registry = ''
     if (env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST){
