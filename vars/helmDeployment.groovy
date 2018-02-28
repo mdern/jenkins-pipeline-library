@@ -46,7 +46,7 @@ def call(body) {
     def internal_port = config.internalPort ?: '80'
     def imagepull = config.imagePullPolicy ?: 'IfNotPresent'
     def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
-    def custom_values = config.customValues ?: ''
+    def custom_values = config.customValues ?: '---'
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
 
