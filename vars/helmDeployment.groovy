@@ -1,6 +1,4 @@
 #!/usr/bin/groovy
-import io.fabric8.Utils
-import io.fabric8.Fabric8Commands
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
@@ -31,9 +29,6 @@ def call(body) {
     body.delegate = config
     body()
 
-    def flow = new Fabric8Commands()
-    def utils = new Utils()
-
     def service_name = config.serviceName ?: "${env.JOB_NAME}"
     def replicaCount = config.replicaCount ?: '1'
     def requestCPU = config.resourceRequestCPU ?: '0'
@@ -45,10 +40,11 @@ def call(body) {
     def external_port = config.externalPort ?: '80'
     def internal_port = config.internalPort ?: '80'
     def imagepull = config.imagePullPolicy ?: 'IfNotPresent'
-    def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
+    def image_name = config.imageName
     def custom_values = config.customValues ?: ["empty_custom": "true"]
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
+    def timeout = config.initTimeout ?: '300'
 
     def values = """
 replicaCount: ${replicaCount}
@@ -84,7 +80,6 @@ resources:
     memory: ${requestMemory}
 """.stripIndent()
 
-    def cloud = flow.getCloudConfig()
     def helmConfig = values + ingress + resources + to_yaml(custom_values)
 
     stash name: "helmconfig", includes: "chart/*/**"
@@ -102,7 +97,7 @@ resources:
         ],
         [
           name: 'helm',
-          image: 'justicel/docker-helm:2.7.2-1',
+          image: 'justicel/docker-helm:2.9.0',
           command: 'sh -c',
           args: 'cat',
           ttyEnabled: true
@@ -111,6 +106,7 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
+          
           writeFile file: 'values.yaml', text: helmConfig
 
           unstash "helmconfig"
@@ -119,7 +115,7 @@ resources:
             throw new Exception("Namespace cannot be empty!")
           }
 
-          sh "helm upgrade ${config.namespace.take(4)}-${service_name} chart --debug --wait --install --namespace ${config.namespace} -f values.yaml"
+          sh "helm upgrade ${config.namespace.take(4)}-${service_name} chart --wait --timeout ${timeout} --install --namespace ${config.namespace} -f values.yaml"
 
         }
       }
