@@ -9,7 +9,11 @@ def call(body) {
 
     def buildStatus = config.buildStatus ?: 'STARTED'
 
-    buildStatus = buildStatus ?: 'SUCCESS'
+    if (buildStatus == null) {
+      buildStatus = 'SUCCESS'
+    } else {
+      buildStatus = buildStatus
+    }
 
     def color
 
