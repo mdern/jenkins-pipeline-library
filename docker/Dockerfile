@@ -1,4 +1,4 @@
-FROM linkyard/docker-helm:2.7.2
+FROM linkyard/docker-helm:2.9.0
 
 RUN apk update \
   && apk add bash \
