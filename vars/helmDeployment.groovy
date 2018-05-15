@@ -31,9 +31,6 @@ def call(body) {
     body.delegate = config
     body()
 
-    def flow = new Fabric8Commands()
-    def utils = new Utils()
-
     def service_name = config.serviceName ?: "${env.JOB_NAME}"
     def replicaCount = config.replicaCount ?: '1'
     def requestCPU = config.resourceRequestCPU ?: '0'
@@ -85,7 +82,6 @@ resources:
     memory: ${requestMemory}
 """.stripIndent()
 
-    def cloud = flow.getCloudConfig()
     def helmConfig = values + ingress + resources + to_yaml(custom_values)
 
     stash name: "helmconfig", includes: "chart/*/**"
