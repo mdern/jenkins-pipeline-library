@@ -1,6 +1,4 @@
 #!/usr/bin/groovy
-import io.fabric8.Utils
-import io.fabric8.Fabric8Commands
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.DumperOptions
 
@@ -42,7 +40,7 @@ def call(body) {
     def external_port = config.externalPort ?: '80'
     def internal_port = config.internalPort ?: '80'
     def imagepull = config.imagePullPolicy ?: 'IfNotPresent'
-    def image_name = config.imageName ?: "${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}"
+    def image_name = config.imageName
     def custom_values = config.customValues ?: ["empty_custom": "true"]
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
