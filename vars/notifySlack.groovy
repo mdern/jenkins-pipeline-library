@@ -8,8 +8,18 @@ def call(body) {
     body()
 
     def buildStatus = config.buildStatus ?: 'STARTED'
+    def enableBlueOcean = config.enableBlueOcean ?: true
+
+    def buildurl
+
+    if (enableBlueOcean) {
+      buildurl = "${env.RUN_DISPLAY_URL}"
+    } else {
+      buildurl = "${env.BUILD_URL}"
+    }
 
     def color
+
 
     if (buildStatus == 'STARTED') {
       color = '#D4DADF'
@@ -21,7 +31,7 @@ def call(body) {
       color = '#FF9FA1'
     }
 
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${buildurl}"
 
     slackSend(color: color, message: msg, channel: config.channel)
 
