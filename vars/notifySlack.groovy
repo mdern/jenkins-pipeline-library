@@ -23,6 +23,6 @@ def call(body) {
 
     def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
 
-    slackSend(color: color, message: msg)
+    slackSend(color: color, message: msg, channel: config.channel)
 
 }
