@@ -15,7 +15,7 @@ def call(body) {
       color = '#D4DADF'
     } else if (buildStatus == 'SUCCESS') {
       color = '#BDFFC3'
-    } else if (buildStatus == 'UNSTABLE') {
+    } else if (buildStatus == 'UNSTABLE' || buildStatus == 'ABORTED') {
       color = '#FFFE89'
     } else {
       color = '#FF9FA1'
