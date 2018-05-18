@@ -19,19 +19,23 @@ def call(body) {
     }
 
     def color
-
+    def emoji
 
     if (buildStatus == 'STARTED') {
       color = '#D4DADF'
+      emoji = "🔮"
     } else if (buildStatus == 'SUCCESS') {
       color = '#BDFFC3'
+      emoji = "🎉"
     } else if (buildStatus == 'UNSTABLE' || buildStatus == 'ABORTED') {
       color = '#FFFE89'
+      emoji = "⛅"
     } else {
       color = '#FF9FA1'
+      emoji = "🔥"
     }
 
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${buildurl}"
+    def msg = "${buildStatus} ${emoji}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${buildurl}"
 
     slackSend(color: color, message: msg, channel: config.channel)
 
