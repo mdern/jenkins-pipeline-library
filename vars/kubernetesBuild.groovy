@@ -108,7 +108,7 @@ def call(Map config = [:], body) {
 
     //Send slack notification of final build result
     stage("Slack Build Result") {
-      when(slackChannel) {
+      when(slackChannel.toString()) {
         notifySlack { 
           buildStatus = buildResult
           channel = slackChannel
