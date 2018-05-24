@@ -106,6 +106,7 @@ resources:
     ) {
       node('helm-build-job') {
         container(name: 'helm') {
+          
           writeFile file: 'values.yaml', text: helmConfig
 
           unstash "helmconfig"
@@ -114,7 +115,7 @@ resources:
             throw new Exception("Namespace cannot be empty!")
           }
 
-          sh "helm upgrade ${config.namespace.take(4)}-${service_name} chart --debug --wait --timeout ${timeout} --install --namespace ${config.namespace} -f values.yaml"
+          sh "helm upgrade ${config.namespace.take(4)}-${service_name} chart --wait --timeout ${timeout} --install --namespace ${config.namespace} -f values.yaml"
 
         }
       }
