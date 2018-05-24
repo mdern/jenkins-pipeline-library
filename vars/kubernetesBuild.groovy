@@ -107,8 +107,8 @@ def call(Map config = [:], body) {
     def buildResult = currentBuild.result ?: 'SUCCESS'
 
     //Send slack notification of final build result
-    if (slackChannel) {
-      stage("Slack Build Result") {
+    stage("Slack Build Result") {
+      when(slackChannel) {
         notifySlack { 
           buildStatus = buildResult
           channel = slackChannel
@@ -116,8 +116,8 @@ def call(Map config = [:], body) {
       }
     }
     //Send gitlab final notification of build result
-    if (env.gitlabMergeRequestId) {
-      stage("Gitlab Build Result") {
+    stage("Gitlab Build Result") {
+      when(env.gitlabMergeRequestId) {
         def thumbs
         if (buildResult == "SUCCESS") {
           thumbs = "👍"
@@ -126,7 +126,8 @@ def call(Map config = [:], body) {
         }
 
         if (env.gitlabSourceBranch) addGitLabMRComment comment: """Build result ${buildResult} ${thumbs}: [${env.RUN_DISPLAY_URL}]"""
-      }//stage(gitlab)
+      }
+    }//stage(gitlab)
     }//if
   }//try
 }
