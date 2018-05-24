@@ -1,4 +1,5 @@
 #!/usr/bin/groovy
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
 def call(Map config = [:], body) {
 
@@ -108,16 +109,18 @@ def call(Map config = [:], body) {
 
     //Send slack notification of final build result
     stage("Slack Build Result") {
-      when(slackChannel.toString()) {
+      if(slackChannel) {
         notifySlack { 
           buildStatus = buildResult
           channel = slackChannel
         }
+      } else {
+        Utils.markStageSkippedForConditional(STAGE_NAME)
       }
     }
     //Send gitlab final notification of build result
     stage("Gitlab Build Result") {
-      when(env.gitlabMergeRequestId) {
+      if(env.gitlabMergeRequestId) {
         def thumbs
         if (buildResult == "SUCCESS") {
           thumbs = "👍"
@@ -126,6 +129,8 @@ def call(Map config = [:], body) {
         }
 
         if (env.gitlabSourceBranch) addGitLabMRComment comment: """Build result ${buildResult} ${thumbs}: [${env.RUN_DISPLAY_URL}]"""
+      } else {
+        Utils.markStageSkippedForConditional(STAGE_NAME)
       }
     }//stage(gitlab)
   }//try
