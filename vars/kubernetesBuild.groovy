@@ -128,6 +128,5 @@ def call(Map config = [:], body) {
         if (env.gitlabSourceBranch) addGitLabMRComment comment: """Build result ${buildResult} ${thumbs}: [${env.RUN_DISPLAY_URL}]"""
       }
     }//stage(gitlab)
-    }//if
   }//try
 }
