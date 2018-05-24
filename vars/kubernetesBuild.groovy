@@ -21,7 +21,7 @@ def call(Map config = [:], body) {
   //This should always be defined... we'll not bother to check and just error if not
   def deploymentMap = config.deploymentMap
 
-  def dockerRepository = config.dockerRepository ? 'docker-cse.wds.io'
+  def dockerRepository = config.dockerRepository ?: 'docker-cse.wds.io'
   String slackChannel = config.slackChannel
   ////// Local configuration variables //////
 
