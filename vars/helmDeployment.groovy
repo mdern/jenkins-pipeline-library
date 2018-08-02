@@ -97,7 +97,7 @@ resources:
         ],
         [
           name: 'helm',
-          image: 'justicel/docker-helm:2.9.0',
+          image: 'justicel/docker-helm:2.9.1',
           command: 'sh -c',
           args: 'cat',
           ttyEnabled: true
