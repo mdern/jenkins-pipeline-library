@@ -41,6 +41,7 @@ def call(body) {
     def internal_port = config.internalPort ?: '80'
     def imagepull = config.imagePullPolicy ?: 'IfNotPresent'
     def image_name = config.imageName
+    def secondary_image_name = config.secondaryImageName ? ''
     def custom_values = config.customValues ?: ["empty_custom": "true"]
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
@@ -50,6 +51,7 @@ def call(body) {
 replicaCount: ${replicaCount}
 image:
   name: ${image_name}
+  secondary_image_name: ${secondary_image_name}
   pullPolicy: ${imagepull}
   pullSecret: ${imagepullsecret}
 service:
