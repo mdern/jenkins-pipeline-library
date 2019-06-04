@@ -93,7 +93,7 @@ resources:
 
     podTemplate(
       cloud: 'kubernetes',
-      serviceAccount: "${serviceAccount},
+      serviceAccount: "${serviceAccount}",
       label: 'helm-build-job',
       containers: [
         [
