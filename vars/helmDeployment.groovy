@@ -29,6 +29,7 @@ def call(body) {
     body.delegate = config
     body()
 
+    def serviceAccount = config.serviceAccount ?: 'jenkins'
     def service_name = config.serviceName ?: "${env.JOB_NAME}"
     def replicaCount = config.replicaCount ?: '1'
     def requestCPU = config.resourceRequestCPU ?: '0'
@@ -88,7 +89,7 @@ resources:
 
     podTemplate(
       cloud: 'kubernetes',
-      serviceAccount: 'jenkins',
+      serviceAccount: "${serviceAccount},
       label: 'helm-build-job',
       containers: [
         [
