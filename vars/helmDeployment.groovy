@@ -47,6 +47,8 @@ def call(body) {
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
     def timeout = config.initTimeout ?: '300'
+    def requestsephemeralstorage = config.resourceRequestsEphemeralStorage ?: '2Gi'
+    def limitephemeralstorage = config.resourceLimitEphemeralStorage ?: '4Gi' 
 
     def values = """
 replicaCount: ${replicaCount}
@@ -78,9 +80,11 @@ resources:
   limits:
     cpu: ${limitCPU}
     memory: ${limitMemory}
+    ephemeral-storage: ${limitephemeralstorage}
   requests:
     cpu: ${requestCPU}
     memory: ${requestMemory}
+    ephemeral-storage: ${requestsephemeralstorage}
 """.stripIndent()
 
     def helmConfig = values + ingress + resources + to_yaml(custom_values)
