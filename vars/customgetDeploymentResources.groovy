@@ -28,7 +28,7 @@ def call(body) {
 
     def fabric8Registry = ''
     if (env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST){
-        fabric8Registry = env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST+':'+env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT+'/'
+        fabric8Registry = env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST+'/'
     }
 
     def sha
