@@ -49,6 +49,7 @@ def call(body) {
     def timeout = config.initTimeout ?: '300'
     def requestsephemeralstorage = config.resourceRequestsEphemeralStorage ?: '2Gi'
     def limitephemeralstorage = config.resourceLimitEphemeralStorage ?: '4Gi' 
+    def helmVersion = config.helmVersion ?: '2.14.2'
 
     def values = """
 replicaCount: ${replicaCount}
@@ -98,13 +99,13 @@ resources:
       containers: [
         [
             name: 'jnlp',
-            image: "jenkins/jnlp-slave:3.10-1-alpine",
+            image: "jenkins/jnlp-slave:3.29-1-alpine",
             args: '${computer.jnlpmac} ${computer.name}',
             workingDir: '/home/jenkins/'
         ],
         [
           name: 'helm',
-          image: 'justicel/docker-helm:2.9.1',
+          image: "dtzar/helm-kubectl:${helmVersion}",
           command: 'sh -c',
           args: 'cat',
           ttyEnabled: true
