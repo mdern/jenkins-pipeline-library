@@ -123,6 +123,8 @@ resources:
             throw new Exception("Namespace cannot be empty!")
           }
 
+          sh "echo 'Starting helm upgrade or install'"
+          sh "helm version"
           sh "helm upgrade ${config.namespace.take(4)}-${service_name} chart --wait --debug --timeout ${timeout} --install --namespace ${config.namespace} -f values.yaml"
 
         }
