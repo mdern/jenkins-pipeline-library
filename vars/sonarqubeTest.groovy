@@ -29,8 +29,7 @@ def call(body) {
         [
             name: 'jnlp',
             image: jnlpImage,
-            args: '${computer.jnlpmac} ${computer.name}',
-            workingDir: '/home/jenkins/'
+            args: '${computer.jnlpmac} ${computer.name}'
         ],
         [
           name: 'sonarqube',

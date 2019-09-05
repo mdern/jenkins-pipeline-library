@@ -100,8 +100,7 @@ resources:
         [
             name: 'jnlp',
             image: "jenkins/jnlp-slave:3.29-1-alpine",
-            args: '${computer.jnlpmac} ${computer.name}',
-            workingDir: '/home/jenkins/'
+            args: '${computer.jnlpmac} ${computer.name}'
         ],
         [
           name: 'helm',
