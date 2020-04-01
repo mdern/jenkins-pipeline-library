@@ -100,7 +100,8 @@ resources:
         [
             name: 'jnlp',
             image: "jenkins/jnlp-slave:4.3-1-alpine",
-            args: '${computer.jnlpmac} ${computer.name}'
+            command: 'sh -c',
+            args: 'jenkins-slave ${computer.jnlpmac} ${computer.name}'
         ],
         [
           name: 'helm',
