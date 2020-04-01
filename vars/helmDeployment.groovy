@@ -46,7 +46,7 @@ def call(body) {
     def custom_values = config.customValues ?: ["empty_custom": "true"]
     def ingress_enable = config.ingressEnable ?: 'false'
     def imagepullsecret = config.imagePullSecret ?: 'false'
-    def timeout = config.initTimeout ?: '300'
+    def timeout = config.initTimeout ?: '600'
     def requestsephemeralstorage = config.resourceRequestsEphemeralStorage ?: '2Gi'
     def limitephemeralstorage = config.resourceLimitEphemeralStorage ?: '4Gi' 
     def helmVersion = config.helmVersion ?: '0.90.8-2.16.1-1.14.7'
