@@ -49,7 +49,7 @@ def call(body) {
     def timeout = config.initTimeout ?: '300'
     def requestsephemeralstorage = config.resourceRequestsEphemeralStorage ?: '2Gi'
     def limitephemeralstorage = config.resourceLimitEphemeralStorage ?: '4Gi' 
-    def helmVersion = config.helmVersion ?: '2.16.1'
+    def helmVersion = config.helmVersion ?: '0.90.8-2.16.1-1.14.7'
 
     def values = """
 replicaCount: ${replicaCount}
@@ -105,7 +105,7 @@ resources:
         ],
         [
           name: 'helm',
-          image: "dtzar/helm-kubectl:${helmVersion}",
+          image: "chatwork/helmfile:${helmVersion}",
           command: 'sh -c',
           args: 'cat',
           ttyEnabled: true
