@@ -99,7 +99,7 @@ resources:
       containers: [
         [
             name: 'jnlp',
-            image: "jenkins/inbound-agent:4.7-1-jdk11",
+           
             command: 'sh -c',
             args: 'jenkins-slave ${computer.jnlpmac} ${computer.name}'
         ],
